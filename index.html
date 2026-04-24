@@ -1,13 +1,145 @@
-<!doctype html>
+
+      <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>project</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+
+<body class="=relative black">
+  <script>
+    
+ 
+    function addTask(){
+    let input = document.getElementById("taskInput");
+    let text = input.value; 
+
+   let li = document.createElement("li");
+   li.className = "flex justify-between items-center bg-yellow-100 px-2  gap-2 rounded";
+
+  
+
+  
+
+  input.value = "";
+  
+  // if(input.value === ""){
+  //   return;
+  // }
+
+  let div=document.createElement("div");
+  div.className="flex items center gap-2 ";
+
+
+  let checkbox=document.createElement("input");
+  checkbox.type="checkbox";
+
+  let span=document.createElement("span");
+  span.innerText=text;
+
+ 
+
+  checkbox.onclick =function(){
+    if (checkbox.checked){
+      span.classList.add("line-through");
+    }
+
+     else{
+      span.classList.remove("line-through");
+     }
+    
+
+    
+
+  };
+
+  
+  div.appendChild(checkbox);
+  div.appendChild(span);
+
+  li.appendChild(div);
+
+ let button=document.createElement("button");
+  button.innerText="❌";
+  button.className="flex items-end ml-70 ";
+
+  button.addEventListener("click",function(){
+    div.remove();
+  })
+
+    div.appendChild(button);
+
+    let edit=document.createElement("button");
+   edit.innerText="✏️";
+   edit.className="flex left-100";
+   div.appendChild(edit);
+     
+    edit.addEventListener("click",function(){
+      let inbox=document.createElement("input");
+      inbox.className=("flex items-center bg-white");
+      li.appendChild(inbox);
+      inbox.value=span.textContent;
+
+       })
+
+  document.getElementById("taskList").appendChild(li);
+
+  input.value = "";
+ 
+   
+    }
+    
+   
+  </script>
+
+
+  <div class="h-100 w-100 bg-white absolute top-49 left-190 shadow-2xl"> 
+    <ul id="taskList" class=""></ul> </div>
+  
+ <div class="bg-yellow-100 p-4"  >
+  
+        <h1 class=" text-4xl md:text-6xl font-bold"  >To-do </h1>
+    </div> 
+       <div class=" bg-500 absolute  shadow-lg h-160 lg:w-85 top-33 rounded-lg  ">
+        
+          
+         <div class=" w-40  rounded-md absolute top-2 lg:w-80 md:w-60"><h4  class=" flex flex-row text-4xl   md:text-5xl   left-0  md:left-20 font-bold text-white-300  justify-center  font-mono  " >Inbox</h4></div>
+         <div class="w-35 bg-yellow-50 rounded-md absolute top-15 lg:w-75 md:w-50"><a href="" class="flex flex-row   justify-center font-mono   text-xl  md:text-2xl">⭐Today</a></div>
+          <div class="w-35 bg-lime-50 rounded-md absolute top-25 lg:w-75 md:w-50"><a href="" class="flex flex-row text-2xl  text- justify-center font-mono   sm:text-1x  md:text-2xl ">📅Upcoming </a></div>
+           <div class="w-35 bg-yellow-50 rounded-md absolute top-35 lg:w-75 md:w-50"><a href=""class="flex flex-row text-2xl  text- justify-center font-mono ">📍Anytime</a></div>
+           <div class="w-35 bg-lime-50 rounded-md absolute top-45 lg:w-75 md:w-50"><a href="" class="flex flex-row text-2xl  text- justify-center font-mono ">🧾Some Day</a></div>  
+             <div class="w-35 bg-yellow-50 rounded-md absolute top-55 lg:w-75 md:w-50"><a href="" class="flex flex-row text-2xl  text- justify-center font-mono ">📖Logbook</a></div>
+         
+        
+         </div>
+        
+             <div class="flex gap-2 mb-5">
+      <input id="taskInput" type="text"placeholder="Type your Activities..."
+        class="flex-1 bg-yellow-50 h-10 border-2 border-yellow-300 rounded px-2">
+
+        
+      <button onclick="addTask()"class="bg-black text-white px-4  rounded"> Add</button>
+
+       
+       
+        
+      
+    </div>
+             
+     <!-- <div class="bg-white rounded-lg shadow-md px-10 left-70 "  id="task">
+            <ul id="todos" class="space-y-2">
+
+            </ul>
+        </div>
+        -->
+       
+       </div>
+   
+
+  
+
   </body>
 </html>
