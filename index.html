@@ -16,6 +16,7 @@
     function addTask(){
     let input = document.getElementById("taskInput");
     let text = input.value; 
+    if(text === "") return; 
 
    let li = document.createElement("li");
    li.className = "flex justify-between items-center bg-yellow-100 px-2  gap-2 rounded";
@@ -24,14 +25,14 @@
 
   
 
-  input.value = "";
+    input.value = "";
   
   // if(input.value === ""){
   //   return;
   // }
 
   let div=document.createElement("div");
-  div.className="flex items center gap-2 ";
+  div.className="flex items-center gap-2 w-full md:1/4";
 
 
   let checkbox=document.createElement("input");
@@ -79,15 +80,27 @@
      
     edit.addEventListener("click",function(){
       let inbox=document.createElement("input");
-      inbox.className=("flex items-center bg-white");
+      inbox.className=("flex items-center bg-white w-full md:1/4");
       li.appendChild(inbox);
       inbox.value=span.textContent;
+      inbox.focus();
 
-       })
+       inbox.addEventListener("keydown",function(e){
+        if(e.key === "Enter"){
+          span.innerText=inbox.value;
+
+        }
+
+        div.replaceChild(span,inbox);
+      
+
+      })
+
+      })
 
   document.getElementById("taskList").appendChild(li);
 
-  input.value = "";
+   input.value = "";
  
    
     }
@@ -96,7 +109,7 @@
   </script>
 
 
-  <div class="h-100 w-100 bg-white absolute top-49 left-190 shadow-2xl"> 
+  <div class="h-100 w-100 bg-white absolute top-49 left-190 shadow-2xl "> 
     <ul id="taskList" class=""></ul> </div>
   
  <div class="bg-yellow-100 p-4"  >
@@ -129,12 +142,6 @@
       
     </div>
              
-     <!-- <div class="bg-white rounded-lg shadow-md px-10 left-70 "  id="task">
-            <ul id="todos" class="space-y-2">
-
-            </ul>
-        </div>
-        -->
        
        </div>
    
