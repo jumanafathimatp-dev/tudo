@@ -1,18 +1,19 @@
-function fetchAllTodos() {
-  fetch('https://dummyjson.com/todos')
-    .then(res => res.json())
-    .then(data => {
-      todos = data.todos
-      renderTodos();
-    });
+fetchAllTodos();
+
+function markTodoAsChecked() {
+  if (checkbox.checked) {
+    span.classList.add("line-through");
+  } else {
+    span.classList.toggle("line-through");
+  }
 }
 
-function renderTodos() {
+function renderTodos(todos) {
   let list = document.getElementById("taskList");
   list.innerHTML = "";
 
+  // let todos = JSON.parse(localStorage.getItem('todos')) || [];
   todos.forEach((text, index) => {
-
     let li = document.createElement("li");
     li.className =
       "flex justify-between items-center bg-yellow-100 p-3 rounded";
@@ -20,94 +21,96 @@ function renderTodos() {
     let div = document.createElement("div");
     div.className = "flex items-center gap-2 w-full";
 
-    // checkbx
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.checked = text.completed;
 
     let span = document.createElement("span");
     span.innerText = text.todo;
 
-    if (text.completed) {
-      span.classList.add("line-through");
-    }
-
-    checkbox.onclick = function () {
-      span.classList.toggle("line-through");
-     
-    };
+    checkbox.onclick = markTodoAsChecked;
 
     div.appendChild(checkbox);
     div.appendChild(span);
-
-
-
-
-
-
-    // editttt
-
-
-
-    
-    let editBtn = document.createElement("button");
-    editBtn.innerText = "✏️";
-
-    editBtn.onclick = function () {
-      let input = document.createElement("input");
-      input.value = text.todo;
-      input.className = "border px-2";
-
-      div.replaceChild(input, span);
-      input.focus();
-
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          text.todo = input.value;
-          span.innerText = input.value;
-          div.replaceChild(span, input);
-
-          
-          fetch(`https://dummyjson.com/todos/${text.id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              todo: input.value,
-            }),
-          })
-          .then(res => res.json())
-          .then(console.log);
-        }
-      });
-    };
-
-
-
-
-
-    // delete 
-    let delBtn = document.createElement("button");
-    delBtn.innerText = "❌";
-
-    delBtn.onclick = function () {
-      todos.splice(index, 1);
-      renderTodos();
-
-      
-      fetch(`https://dummyjson.com/todos/${text.id}`, {
-        method: "DELETE",
-      })
-      .then(res => res.json())
-      .then(console.log);
-    };
-
     li.appendChild(div);
-    li.appendChild(editBtn);
-    li.appendChild(delBtn);
 
     list.appendChild(li);
   });
+
+  
+}
+delBtn.onclick = function () {
+  todos.splice(index, 1);
+  renderTodos(todos);
+
+  // ✅ DELETE API here
+  fetch("https://dummyjson.com/todos/1", {
+    method: "DELETE",
+  })
+    .then((res) => res.json())
+     .then((data) => {
+      deleteTodos(li);
+
+     })  
+    
+};
+  
+  // function deleteTodos(todos){
+  //    let delBtn = document.createElement("button");
+  //   delBtn.innerText = "❌";
+
+  //   delBtn.onclick = function () {
+  //     todos.splice(index, 1);
+  //     renderTodos();
+
+     
+  //     li.appendChild(button);
+  //   };
+  // }
+     
+
+  let edit = document.createElement("button");
+  edit.innerText = "✏️";
+
+  edit.onclick = function () {
+    let inbox = document.createElement("input");
+    inbox.className = "border px-2 py-1 rounded w-full";
+    inbox.value = span.innerText;
+
+    div.replaceChild(inbox, span);
+    inbox.focus();
+
+    inbox.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        todos[index] = inbox.value;
+        // localStorage.setItem("todos", JSON.stringify(todos));
+        // render();
+      }
+    });
+  };
+
+
+function fetchAllTodos() {
+  fetch("https://dummyjson.com/todos")
+    .then((res) => res.json())
+    .then((data) => {
+      renderTodos(data.todos);
+    });
+
+  
 }
 
+function addTask() {
+  let input = document.getElementById("taskInput");
+  let text = input.value;
+  if (text === "") return;
 
-fetchAllTodos();
+  let todos = JSON.parse(localStorage.getItem("todos")) || [];
+
+  todos.push(text.todo);
+
+  // localStorage.setItem("todos", JSON.stringify(todos));
+
+  input.value = "";
+
+  render();
+}
