@@ -6,26 +6,92 @@
     <title>sign in</title>
       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div> <h1 class="relative  text-2xl md:text-3xl lg:text-6xl -left-100 lg:left-1 font-bold ml-140 top-30 text-gray-400 md:-left-80 "><b>SIGN IN</b></h1>
- <div class=" relative w-100 md:w-140 h-100 bg-amber-50 ml-100 top-40 shadow-2xl -left-80 lg:left-1">
-   
-     <label for="name" class="absolute bold font-serif top-10 md:left-10 left-5">FIRST NAME:</label>
-     <input type="text" class="absolute   h-8 w-70 border-amber-50 bg-amber-50 left-40 top-8 rounded-2xl">
-     <label for="name" class="absolute bold font-serif top-20 left-10">SECOND NAME:</label>
-      <input type="text" class="absolute  h-8 w-70 border-amber-50 bg-amber-50 left-45 top-20 rounded-2xl">
-       <label for="name" class="absolute bold font-serif top-30 left-10">EMAIL:</label>
-      <input type="text" class="absolute  h-8 w-70 border-amber-50 bg-amber-50 left-30 top-30 rounded-2xl">
-      <label for="name" class="absolute bold font-serif top-40 left-10">SET PASSWORD:</label>
-      <input type="text" class="absolute  h-8 w-70 border-amber-50 bg-amber-50 left-45 top-40 rounded-2xl">
-      <label for="name" class="absolute bold font-serif top-50 left-10">CONFIRM PASSWORD:</label>
-      <input type="text" class="absolute  h-8 w-70 border-amber-50 bg-amber-50 left-55 top-50 rounded-2xl">
-      <a href="" class=" absolute top-70 text-2xl bg-amber-50 rounded-2xl left-60 ">SIGN IN</a>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-                       
- </div>
-</div>
-   
+  <div class="w-full max-w-md bg-amber-50 shadow-2xl rounded-2xl p-6">
+
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-400 text-center mb-6">
+      SIGN IN
+    </h1>
+
+    <form id="form">
+      
+
+      <div >
+        <label class="block font-serif mb-1">FIRST NAME:</label>
+        <input type="text" id="firstname" placeholder="enter your 1st name" class="w-full h-10 rounded-xl px-3 bg-amber-100 outline-none  ">
+      </div>
+
+      <div>
+        <label class="block font-serif mb-1">SECOND NAME:</label>
+        <input type="text" id="secondname" placeholder="enter your 2nd name" class="w-full h-10 rounded-xl px-3 bg-amber-100 outline-none">
+      </div>
+
+      <div>
+        <label class="block font-serif mb-1">EMAIL:</label>
+        <input type="text" id="email"placeholder="enter your email id" class="w-full h-10 rounded-xl px-3 bg-amber-100 outline-none">
+      </div>
+
+      <div>
+        <label class="block font-serif mb-1">SET PASSWORD:</label>
+        <input type="password" id="setpass" placeholder="set new pass" class="w-full h-10 rounded-xl px-3 bg-amber-100 outline-none">
+      </div>
+
+      <div>
+        <label class="block font-serif mb-1">CONFIRM PASSWORD:</label>
+        <input type="password" id="confirm" placeholder="confirm your pass" class="w-full h-10 rounded-xl px-3 bg-amber-100 outline-none">
+      </div>
+
+      <button  id="submit" class="w-full bg-amber-200 text-lg rounded-xl py-2 mt-4 hover:bg-amber-100 text-white">
+        SIGN IN
+      </button>
+      <p class="left-10 ">Already have an account <b><a href="login"></a></b></p>
+
+    </form>
+  </div>
+  <script>
+     
+     fetch('https://dummyjson.com/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
     
+    username: 'emilys',
+    password: 'emilyspass',
+    expiresInMins: 1, 
+  }),
+  credentials: 'include' 
+})
+.then(res => res.json())
+.then(console.log);
+    
+     const form=document.getElementById('form');
+    const firstname=document.getElementById('firstname');
+    const secondname=document.getElementById('secondname');
+    const email=document.getElementById('email');
+    const setpass=document.getElementById('setpass');
+    const confirm=document.getElementById('confirm');
+
+    form.addEventListener("submit",function (event){
+      event.preventDefault();
+
+      if(setpass.value !==confirm.value){
+        alert("password don't match..")
+      }
+      else{
+        alert("submitted succesfully")
+      }
+    })
+
+   
+
+
+
+   
+
+
+
+  </script>
+
 </body>
 </html>

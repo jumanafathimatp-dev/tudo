@@ -1,4 +1,3 @@
-
 render();
 function render(){
     let list = document.getElementById("taskList");
@@ -123,7 +122,4 @@ async function addTask(){
 
   render(); 
 }
-
-
-
 
